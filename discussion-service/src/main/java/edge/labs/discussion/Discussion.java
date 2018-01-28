@@ -1,32 +1,32 @@
 package edge.labs.discussion;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
+import javax.persistence.*;
 import java.util.Collections;
 import java.util.List;
 
-@Document
+@Entity
 public class Discussion {
 
     @Id
-    public String id;
+    @GeneratedValue
+    private Long id;
 
-    public String name;
-    public String createdDate;
-    public List<Reply> replies;
+    private String name;
+    private String createdDate;
+
+    @OneToMany(mappedBy = "discussion", cascade = CascadeType.ALL)
+    private List<Reply> replies;
 
     public Discussion() {
         this.replies = Collections.emptyList();
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public Discussion setId(String id) {
+    public void setId(Long id) {
         this.id = id;
-        return this;
     }
 
     public String getName() {

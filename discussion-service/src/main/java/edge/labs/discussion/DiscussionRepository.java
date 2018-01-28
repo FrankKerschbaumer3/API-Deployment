@@ -1,11 +1,11 @@
 package edge.labs.discussion;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface DiscussionRepository extends MongoRepository<Discussion, String> {
+public interface DiscussionRepository extends JpaRepository<Discussion, Long> {
 
-    Optional<Discussion> findById(String id);
+    Optional<Discussion> findById(Long id);
 
 }
