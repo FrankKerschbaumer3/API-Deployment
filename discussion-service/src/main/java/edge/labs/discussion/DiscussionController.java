@@ -37,7 +37,7 @@ public class DiscussionController {
     @Transactional
     public Discussion addReply(@PathVariable("discussionId") Long discussionId, @RequestBody Reply reply) {
         return repository.findById(discussionId)
-            .map(d -> d.withReply(reply))
+            .map(d -> d.addReply(reply))
             .map(d -> repository.save(d))
             .orElseThrow(() -> new RuntimeException("No such Discussion with ID " + discussionId));
     }

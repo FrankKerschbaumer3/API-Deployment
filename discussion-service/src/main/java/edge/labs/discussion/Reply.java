@@ -1,5 +1,6 @@
 package edge.labs.discussion;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.Entity;
@@ -8,7 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-@JsonIgnoreProperties({"id", "direction"})
 public class Reply {
 
     @Id
@@ -19,6 +19,7 @@ public class Reply {
     private String message;
 
     @ManyToOne
+    @JsonIgnore
     private Discussion discussion;
 
     Reply() { /* For Jackson/JPA */ }

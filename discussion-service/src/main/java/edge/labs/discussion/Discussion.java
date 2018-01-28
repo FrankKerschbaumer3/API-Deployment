@@ -1,10 +1,13 @@
 package edge.labs.discussion;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.Collections;
 import java.util.List;
 
 @Entity
+@JsonIgnoreProperties({"id"})
 public class Discussion {
 
     @Id
@@ -51,13 +54,9 @@ public class Discussion {
         return replies;
     }
 
-    public Discussion setReplies(List<Reply> replies) {
-        this.replies = replies;
-        return this;
-    }
-
-    public Discussion withReply(Reply reply) {
+    public Discussion addReply(Reply reply) {
         this.replies.add(reply);
+        reply.setDiscussion(this);
 
         return this;
     }
