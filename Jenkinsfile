@@ -16,9 +16,7 @@ pipeline {
 
         stage ('Build') {
             steps {
-                sh '''
-                    ls discussion-service
-                '''
+                sh 'mvn -B -f $PATH/discussion-service/pom.xml clean verify'
             }
         }
     }
