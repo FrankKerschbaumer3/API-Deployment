@@ -22,8 +22,9 @@ pipeline {
             }    
         }
         stage ('Dockerfile Pull') {
-            agent { dockerfile true }
-            
+            steps {
+                agent { dockerfile true }
+            }
         }
     } 
 }
