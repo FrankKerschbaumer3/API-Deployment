@@ -17,9 +17,7 @@ pipeline {
         stage ('Build') {
             steps {
                 sh '''
-                    pwd
-                    ls
-                    ls /discussion-service/
+                    ls discussion-service
                 '''
             }
         }
