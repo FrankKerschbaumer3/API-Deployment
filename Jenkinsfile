@@ -14,17 +14,18 @@ pipeline {
                 ''' 
             }
         }
-
-        stage ('Build') {
-            //Runs shell command invoking Maven
-            steps {
-                sh 'mvn -B -f /var/lib/jenkins/workspace/Test_test_test_master-G7PLR452U2TRLXAWXHW3XUJ7LDU4F6JZIGNLKR7UDME4OHC4KZVQ//discussion-service/pom.xml clean verify'
-            }    
-        }
-        stage ('Dockerfile Pull') {
-            steps {
-                agent { dockerfile true }
-            }
-        }
-    } 
+       stage ('Build') {
+            withMaven(
+            // Maven installation declared in the Jenkins "Global Tool Configuration"
+            maven: 'mvn',
+            // Maven settings.xml file defined with the Jenkins Config File Provider Plugin
+            // Maven settings and global settings can also be defined in Jenkins Global Tools Configuration
+            mavenSettingsConfig: 'my-maven-settings',
+            mavenLocalRepo: '.repository') {
+ 
+            // Run the maven build
+            sh "mvn clean verify"
+          }
+       }              
+}
 }
