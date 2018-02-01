@@ -16,9 +16,11 @@ pipeline {
 
         stage ('Build') {
             steps {
-                sh 'pwd'
-                sh 'ls'
-                sh 'ls /discussion-service/
+                sh '''
+                    pwd
+                    ls
+                    ls /discussion-service/
+                '''
             }
         }
     }
