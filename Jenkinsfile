@@ -23,11 +23,11 @@ pipeline {
         }
         stage ('Deployment') {
             steps {
-                sh '''
-                    cd discussion-service/target
-                    ls
-                '''
-                  }
-            }
-    }
-}       
+                dir 'discussion-service/target'
+                sshagent (credentials: ['jenkins (EC2)']) {
+                    sh 'scp discussion-service-0.0.1-SNAPSHOT.jar ec2-user@ec2-54-165-246-73.compute-1.amazonaws.com:/home/'
+                   }
+             }
+        }
+}
+}
