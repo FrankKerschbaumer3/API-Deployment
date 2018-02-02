@@ -26,6 +26,7 @@ pipeline {
                 sh '''
                     cd discussion-service/target
                     ls
+                '''
                   }
             }
     }
