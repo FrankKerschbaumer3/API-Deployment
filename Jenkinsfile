@@ -24,6 +24,7 @@ pipeline {
         stage ('Deployment') {
             //Sends completed API to EC2 instance for Docker-ization.
             steps {
+                dir ('discussion-service/target')
                 sshagent(['36f0d33e-890f-4cb0-8dec-0f684bdfecd9']) {
                     sh 'scp -o StrictHostKeyChecking=no ./discussion-service-0.0.1-SNAPSHOT.jar ec2-user@ec2-52-91-85-223.compute-1.amazonaws.com:/home/'
                    }
