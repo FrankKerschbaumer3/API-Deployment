@@ -26,7 +26,7 @@ pipeline {
             //Sends completed API to EC2 instance.
             steps {
                 sshagent(['36f0d33e-890f-4cb0-8dec-0f684bdfecd9']) {
-                    sh 'ssh -o StrictHostKeyChecking=no ssh ec2-52-91-85-223.compute-1.amazonaws.com 'bash -s' < /home/ec2-user/script.sh'                      
+                    sh 'ssh -o StrictHostKeyChecking=no ec2-user@ec2-52-91-85-223.compute-1.amazonaws.com 'bash -s' < /home/ec2-user/script.sh'                      
                 } 
             }
         }
