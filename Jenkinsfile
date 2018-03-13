@@ -1,34 +1,25 @@
 pipeline {
-    agent any
-    tools { 
-        maven 'mvn' 
-        jdk 'Java 8' 
+    agent {
+        docker {
+            image 'openjdk:8-jdk-alpine'
+            args '-v /root/.m2:/root/.m2'
+        }
     }
     stages {
-        //Echos environment variables.
-        stage ('Initialize') {
+        stage('Build') {
             steps {
-                sh '''
-                    echo "PATH = ${PATH}"
-                    echo "M2_HOME = ${M2_HOME}"
-                ''' 
+                sh 'mvn -B -f /discussion-service/pom.xml clean verify'
             }
         }
-
-        stage ('Build') {
-            //Runs shell command invoking Maven.
+        stage('Test') {
             steps {
-                sh 'mvn -B -f /var/lib/jenkins/workspace/Test_test_test_master-G7PLR452U2TRLXAWXHW3XUJ7LDU4F6JZIGNLKR7UDME4OHC4KZVQ//discussion-service/pom.xml clean verify'
-            }    
-        }
-       
-        stage ('Deployment') {
-            //Sends completed API to EC2 instance.
-            steps {
-                sshagent(['36f0d33e-890f-4cb0-8dec-0f684bdfecd9']) {
-                    sh 'scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/Test_test_test_master-G7PLR452U2TRLXAWXHW3XUJ7LDU4F6JZIGNLKR7UDME4OHC4KZVQ/discussion-service/target/discussion-service-0.0.1-SNAPSHOT.jar ec2-user@ec2-184-73-85-125.compute-1.amazonaws.com:/home/ec2-user/api'                      
-                } 
+                sh 'mvn test'
+            }
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml'
+                }
             }
         }
-}
+    }
 }
