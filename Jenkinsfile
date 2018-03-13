@@ -4,7 +4,7 @@ pipeline {
             image 'openjdk:8-jdk-alpine'
             args '-v /root/.m2:/root/.m2'
         }
-    }
+    tools { maven 'M3'}
     stages {
         stage('Build') {
             steps {
