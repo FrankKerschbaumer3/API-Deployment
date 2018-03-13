@@ -6,9 +6,8 @@ pipeline {
         }
     stages {
         stage('Build') {
-            tools {maven 'M3'}
             steps {
-                sh 'mvn -B -f /discussion-service/pom.xml clean verify'
+                sh 'mvn -B -f ./discussion-service/pom.xml clean verify'
             }
         }
         stage('Test') {
@@ -18,9 +17,8 @@ pipeline {
             post {
                 always {
                     junit 'target/surefire-reports/*.xml'
-                 }
-              }
-          }
-      }
-   }
+                }
+            }
+        }
+    }
 }
